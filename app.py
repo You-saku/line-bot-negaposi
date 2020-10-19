@@ -23,8 +23,6 @@ YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
 
-def kusoripu():
-    return 'wwwwww'
 
 '''
 @app.route("/hello")
@@ -53,7 +51,7 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    responce = kusoripu()
+    responce = mess.kusoripu()
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=responce))
