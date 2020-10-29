@@ -54,7 +54,13 @@ def callback():
 def handle_message(event):
     #responce = mess.kusoripu()
     text = event.message.text
-    if len(text) > 30:
+    if len(text) >= 45:
+        responce = "文字が長すぎるよ\n30文字くらいで会話しようぜ処理できないよ"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=responce))
+
+    elif len(text) < 10 and len(text) > 40:
         responce = np.negaposi_check(text)
         #pythonの改行コードは [\n]
         cresit = "\n\n『小林のぞみ，乾健太郎，松本裕治，立石健二，福島俊一. 意見抽出のための評価表現の収集. 自然言語処理，Vol.12, No.3, pp.203-222, 2005. / Nozomi Kobayashi, Kentaro Inui, Yuji Matsumoto, Kenji Tateishi. Collecting Evaluative Expressions for Opinion Extraction, Journal of Natural Language Processing 12(3), 203-222, 2005.』参照"

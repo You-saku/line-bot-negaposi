@@ -34,7 +34,7 @@ def negaposi_check(words):
         #print("{}文字目 : {}".format(i,word))
 
     max_key,max_value = max(pn.items(),key=lambda x:x[1])
-
+    
     if max_value >= 5 and max_key == 'p':
         return("めっちゃポジティブだねぇ!!")
     elif max_value >= 5 and max_key == 'n':
