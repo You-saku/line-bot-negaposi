@@ -59,20 +59,22 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=responce))
-
-    elif len(text) > 10 and len(text) > 40:
-        responce = np.negaposi_check(text)
-        #pythonの改行コードは [\n]
-        cresit = "\n\n『小林のぞみ，乾健太郎，松本裕治，立石健二，福島俊一. 意見抽出のための評価表現の収集. 自然言語処理，Vol.12, No.3, pp.203-222, 2005. / Nozomi Kobayashi, Kentaro Inui, Yuji Matsumoto, Kenji Tateishi. Collecting Evaluative Expressions for Opinion Extraction, Journal of Natural Language Processing 12(3), 203-222, 2005.』参照"
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="ネガポジ判別結果\n"+responce+cresit))
     else:
         responce = "大丈夫だよ。\nそんな短い文章送ってくるならまだ余裕がある証拠だ。"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=responce))
 
+"""
+    elif len(text) > 10 and len(text) < 40:
+        responce = np.negaposi_check(text)
+        #pythonの改行コードは [\n]
+        cresit = "\n\n『小林のぞみ，乾健太郎，松本裕治，立石健二，福島俊一. 意見抽出のための評価表現の収集. 自然言語処理，Vol.12, No.3, pp.203-222, 2005. / Nozomi Kobayashi, Kentaro Inui, Yuji Matsumoto, Kenji Tateishi. Collecting Evaluative Expressions for Opinion Extraction, Journal of Natural Language Processing 12(3), 203-222, 2005.』参照"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="ネガポジ判別結果\n"+responce+cresit))
+"""
+    
 
 if __name__ == "__main__":
     port = int(os.getenv("PORT",5000))#os.getenv -> 環境変数の数字を取得　引数2つめのおかげで仮に環境変数がヒットしなくてもその引数を設定してくれる
