@@ -91,16 +91,12 @@ def handle_message(event):
             responce = "感情が普通らしいぞ もっと感情揺さぶられる体験をしろ!!"
         else:
             responce = "とにかく言うことはない。そのままの君でいてくれ"
-
         #pythonの改行コードは [\n]
         #licence = "『小林のぞみ，乾健太郎，松本裕治，立石健二，福島俊一. 意見抽出のための評価表現の収集. 自然言語処理，Vol.12, No.3, pp.203-222, 2005. / Nozomi Kobayashi, Kentaro Inui, Yuji Matsumoto, Kenji Tateishi. Collecting Evaluative Expressions for Opinion Extraction, Journal of Natural Language Processing 12(3), 203-222, 2005.』参照"
         licence = "https://ci.nii.ac.jp/naid/130004291853\n参照"
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text="ネガポジ判別結果\n"+responce))
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=licence))
+            TextSendMessage(text="ネガポジ判別結果\n"+responce+"\n\n"+licence))
     else:
         responce = "大丈夫だよ。\nそんな短い文章送ってくるならまだ余裕がある証拠だ。"
         line_bot_api.reply_message(
