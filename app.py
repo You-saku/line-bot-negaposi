@@ -13,6 +13,7 @@ import os
 
 from packages import message as mess
 from packages import negaposi as np
+from janome.tokenizer import Tokenizer
 app = Flask(__name__)
 
 #os.environ -> 環境変数からもってくる　アクセストークンの記述の必要なし
@@ -59,24 +60,55 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=responce))
+    elif len(text) > 10 and len(text) < 40:
+        token = t.tokenize(text,wakati=True)
+
+        #ネガポジカウンター
+        pn = {'p':0,'n':0,'e':0}
+
+        for i,word in enumerate(token):
+            #まず最初に辞書にあるか否かチェック
+            try:
+                checker = np_dic[word]
+            except KeyError:
+                continue
+
+            if checker=='p':
+                pn["p"]+=1
+            elif checker=="n":
+                pn["n"]+=1
+            elif checker=="e":
+                pn["e"]+=1
+            #print("{}文字目 : {}".format(i,word))
+
+        max_key,max_value = max(pn.items(),key=lambda x:x[1])
+        
+        if max_value >= 5 and max_key == 'p':
+            responce = "めっちゃポジティブだねぇ!!"
+        elif max_value >= 5 and max_key == 'n':
+            responce = "めっちゃネガティブだねぇ!!"
+        elif max_value >= 5 and max_key == 'e':
+            responce = "感情が普通らしいぞ もっと感情揺さぶられる体験をしろ!!"
+        else:
+            responce = "とにかく言うことはない。そのままの君でいてくれ"
+
+        #pythonの改行コードは [\n]
+        licence = "『小林のぞみ，乾健太郎，松本裕治，立石健二，福島俊一. 意見抽出のための評価表現の収集. 自然言語処理，Vol.12, No.3, pp.203-222, 2005. / Nozomi Kobayashi, Kentaro Inui, Yuji Matsumoto, Kenji Tateishi. Collecting Evaluative Expressions for Opinion Extraction, Journal of Natural Language Processing 12(3), 203-222, 2005.』参照"
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text="ネガポジ判別結果\n"+responce))
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=licence))
     else:
         responce = "大丈夫だよ。\nそんな短い文章送ってくるならまだ余裕がある証拠だ。"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=responce))
 
-"""
-    elif len(text) > 10 and len(text) < 40:
-        responce = np.negaposi_check(text)
-        #pythonの改行コードは [\n]
-        cresit = "\n\n『小林のぞみ，乾健太郎，松本裕治，立石健二，福島俊一. 意見抽出のための評価表現の収集. 自然言語処理，Vol.12, No.3, pp.203-222, 2005. / Nozomi Kobayashi, Kentaro Inui, Yuji Matsumoto, Kenji Tateishi. Collecting Evaluative Expressions for Opinion Extraction, Journal of Natural Language Processing 12(3), 203-222, 2005.』参照"
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text="ネガポジ判別結果\n"+responce+cresit))
-"""
-    
-
 if __name__ == "__main__":
+    t = Tokenizer()
+    np_dic = np.dict_init()
     port = int(os.getenv("PORT",5000))#os.getenv -> 環境変数の数字を取得　引数2つめのおかげで仮に環境変数がヒットしなくてもその引数を設定してくれる
     #0.0.0.0 = どこからでも通信可能なやつ
     app.run(host="0.0.0.0",port=port)
