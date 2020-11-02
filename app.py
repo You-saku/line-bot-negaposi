@@ -66,12 +66,12 @@ def callback():
 def handle_message(event):
     #responce = mess.kusoripu()
     text = event.message.text
-    if len(text) >= 150:
-        responce = "文字が長すぎるよ\n30文字くらいで会話しようぜ処理できないよ"
+    if len(text) >= 300:
+        responce = "文字が長すぎるよ\n落ち着こうぜ一回"
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(text=responce))
-    elif len(text) > 20 and len(text) < 150:
+    elif len(text) > 20 and len(text) < 300:
         result = detect_sentiment(text, language_code)
         responce = result['Sentiment']
         if responce == 'POSITIVE':
