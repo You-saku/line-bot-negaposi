@@ -1,4 +1,14 @@
 # LINE_bot_sample
+
+## 概要
+普通のLINE botです。感情分析を入れたけどあんま意味なかったかな...
+
+## 使用技術
+ - Python(<a href="https://flask.palletsprojects.com/en/2.1.x/">Flask</a>)
+ - <a href="https://aws.amazon.com/jp/comprehend/">AWS Comprehend</a>
+ - LINE Messaging API
+ - Heroku
+
 <h2>2020/10/19</h2>
 リポジトリスタート
 
