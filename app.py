@@ -1,10 +1,6 @@
-"""
-AWS_ACCESS_KEY_ID=<aws-access-key>
-AWS_SECRET_ACCESS_KEY=<aws-secret-access-key>
-AWS_DEFAULT_REGION=<default-aws-region>
-"""
+import boto3
+import config
 from flask import Flask, request, abort
-
 from linebot import (
     LineBotApi, WebhookHandler
 )
@@ -16,30 +12,19 @@ from linebot.models import (
 )
 import os
 
-import boto3
 app = Flask(__name__)
 
-#os.environ -> 環境変数からもってくる　アクセストークンの記述の必要なし
-#結構メジャーなやり方
-YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
-YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
-line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
-handler = WebhookHandler(YOUR_CHANNEL_SECRET)
-
-AWS_DEFAULT_REGION = os.environ["AWS_DEFAULT_REGION"]
+#os.environ -> 環境変数からもってくる
+AWS_DEFAULT_REGION = config.AWS_DEFAULT_REGION
 language_code = "ja"
+line_bot_api = LineBotApi(config.YOUR_CHANNEL_ACCESS_TOKEN)
+handler = WebhookHandler(config.YOUR_CHANNEL_SECRET)
 
 def detect_sentiment(text, language_code):
     comprehend = boto3.client('comprehend', region_name=AWS_DEFAULT_REGION)
     response = comprehend.detect_sentiment(Text=text, LanguageCode=language_code)
     return response
 
-
-'''
-@app.route("/hello")
-def hello():
-    return "Hello Flask"
-'''
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -97,6 +82,6 @@ def handle_message(event):
             TextSendMessage(text=responce))
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT",5000))#os.getenv -> 環境変数の数字を取得　引数2つめのおかげで仮に環境変数がヒットしなくてもその引数を設定してくれる
+    port = int(os.getenv("PORT",8000))#os.getenv -> 環境変数の数字を取得　引数2つめのおかげで仮に環境変数がヒットしなくてもその引数を設定してくれる
     #0.0.0.0 = どこからでも通信可能なやつ
     app.run(host="0.0.0.0",port=port)

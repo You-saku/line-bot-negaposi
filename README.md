@@ -1,36 +1,31 @@
-# LINE_bot_sample
+# LINE_BOT_NEGAPOSI
 
-## 概要
-普通のLINE botです。感情分析を入れたけどあんま意味なかったかな...
+## Summary
+普通のLINE Botです。感情分析を入れた
 
-## 使用技術
- - Python(<a href="https://flask.palletsprojects.com/en/2.1.x/">Flask</a>)
- - <a href="https://aws.amazon.com/jp/comprehend/">AWS Comprehend</a>
- - LINE Messaging API
- - Heroku
+## Use
+ * Python(Flask)
+ * AWS Comprehend
+ * LINE Messaging API
 
-<h2>2020/10/19</h2>
-リポジトリスタート
+## Requirement
+ * Python3
+ * pip
+ * AWS Account
+ * LINE Messaging API
 
-<h2>2020/10/29</h2>
-リポジトリを改善<br>
-<strong>ネガポジ分析を取り入れてみた</strong><br>
-ネガティブワード、ポジティブワードの辞書は(dictonary/pn.csvのcsvファイルの著作権も同様)<br>
-<br>
-"小林のぞみ，乾健太郎，松本裕治，立石健二，福島俊一. 意見抽出のための評価表現の収集. 自然言語処理，Vol.12, No.3, pp.203-222, 2005. / Nozomi Kobayashi, Kentaro Inui, Yuji Matsumoto, Kenji Tateishi. Collecting Evaluative Expressions for Opinion Extraction, Journal of Natural Language Processing 12(3), 203-222, 2005."<br>
-で紹介している<br>
-<br>
-"日本語評価極性辞書（名詞編）ver.1.0（2008年12月版）/ Japanese Sentiment Dictionary (Volume of Nouns) ver. 1.0  著作者: 東北大学 乾・岡崎研究室 / Author(s): Inui-Okazaki Laboratory, Tohoku University"<br>
+## Setup
+1. clone
+2. cd LINE_BOT_NEGAPOSI
+3. cp .env.example .env
+4. setup venv
+5. setup LINE Messaging API
+6. set .env VALUE
+7. python3 -m pip install -r requirements.txt
+8. setup ngrok ```ngrok http 8000```
+9. python3 app.py
 
-を使わせていただきました。ありがとうございます。<br>
-
-<h2>2020/10/31</h2>
-アプリを改善、そして実用レベルまで向上した。<br>
-AWSのAWS Comprehendを利用した感情分析に変更 <- 理由 : 圧倒的計算量の削減。自作の辞書を使用するとどうしても時間がかかってタイムオーバーする。<br>
-一応、LINEで返信が問題なく帰ってくるレベルの返信スピードまで向上<br>
-<br>
-現時点では今後の改善は未定
-<h2>2020/11/02</h2>
-文字制限をとりあえず300文字に設定。長すぎる文章はLINEの会話では使わないし、Botにはなおさらしない。<br>
-本当にやることが一度ひと段落した。<br>
-この感情分析に対しての反応部分を何とか改良していきたい。
+## Tips
+ * [Messaging API](https://developers.line.biz/ja/docs/messaging-api/)
+ * [ngrok](https://ngrok.com/)
+ * [venv](https://camp.trainocate.co.jp/magazine/venv-python/)
