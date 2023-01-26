@@ -3,16 +3,19 @@
 ## Summary
 普通のLINE Botです。感情分析を入れた
 
+<img src="images/demo.jpg" width="40%" />
+
 ## Use
  * Python(Flask)
  * AWS Comprehend
  * LINE Messaging API
 
-## Requirement
+## Requirements
  * Python3
  * pip
  * AWS Account
  * LINE Messaging API
+ * (ngrok)
 
 ## Setup
 1. clone
@@ -29,3 +32,5 @@
  * [Messaging API](https://developers.line.biz/ja/docs/messaging-api/)
  * [ngrok](https://ngrok.com/)
  * [venv](https://camp.trainocate.co.jp/magazine/venv-python/)
+ * 応答メッセージはOFFが良い
+<img src="images/応答メッセージ設定.png" width="80%" />
